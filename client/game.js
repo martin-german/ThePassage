@@ -65,6 +65,7 @@ function startGame(startTimer, ingameTimer){
     const cardsElement = document.querySelector('.container');
     const countBack = document.getElementById("countback");
     const gameplayDisplay = document.querySelector('.gameplay');
+    const gameTimer = document.getElementById('timer');
     
     if(cardsElement)
     {
@@ -74,32 +75,27 @@ function startGame(startTimer, ingameTimer){
 
     // Countdown before game start
   
-    for (let i = startTimer; i >= 0; i--) 
-    {
+    for (let i = startTimer; i >= 0; i--) {
       setTimeout(() => {
         countBack.textContent = `Game starts in ${i}`;
         if(i === 0){
          countBack.style.display = "none";
          gameplayDisplay.style.display = "block";
          gameplayLogic();
+
+      // In-game timer
+      for(let j = ingameTimer; j >= 0; j--) {
+        setTimeout(()=> {
+            gameTimer.textContent = `${j}`
+            
+              if(j === 0) {
+                gameTimer.style.display ='none';
+                console.log('Times up! You lost');
+              }
+            }, (ingameTimer - j) * 1000);
+          }
         }  
       }, (startTimer - i) * 1000);
-    }
-
-    // In-game timer
-    for(let i = ingameTimer; i >= 0; i--)
-    {
-      setTimeout(()=>
-        {
-
-        //TODO display the timer.
-        //console.log(i);
-
-          if(i === 0)
-          {
-            console.log('Times up! You lost');
-          }
-        },(ingameTimer - i) * 1000);
     }
   });
 }
